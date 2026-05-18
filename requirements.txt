@@ -1,0 +1,29 @@
+# Core
+numpy
+pandas
+matplotlib
+scikit-learn
+jupyter
+
+# Deep Learning
+torch
+torchvision
+
+# LLM / RAG
+transformers
+sentence-transformers
+faiss-cpu
+chromadb
+rank-bm25
+ragas
+
+# Fine-tuning
+peft
+trl
+accelerate
+bitsandbytes
+
+# Serving
+fastapi
+uvicorn
+python-dotenv
