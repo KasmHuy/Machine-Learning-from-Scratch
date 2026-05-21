@@ -116,6 +116,7 @@ def str_to_formula(function_str: str) -> Callable[[float], float]:
     allowed_globals = {
         "math": math,
         "e": math.e,
+        "abs": abs,
         "__builtins__": {}
     }
 

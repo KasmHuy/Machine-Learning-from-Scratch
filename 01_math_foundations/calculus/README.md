@@ -11,3 +11,4 @@
 - gradient descent
 - learning rate
 - gradient explosion
+- singularity (điểm kỳ dị)

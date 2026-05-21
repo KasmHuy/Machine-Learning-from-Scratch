@@ -50,10 +50,10 @@ def fomula_test_cli():
 
         except Exception as e:
             print(f"[ERROR] {type(e).__name__}: {e}")
+        graph(func = formula, learning_rate=0.05, a=-x-1, x0 =x+1)
 
 # Gradient descent showcase:
-def graph(learning_rate: float, x0: float, a: float):
-    func = 'x**2'
+def graph(func: str, learning_rate: float, x0: float, a: float):
     f = model.str_to_formula(func)
     x_vals = np.linspace(a, x0, 500)
     y_vals = [f(i) for i in x_vals]
@@ -71,7 +71,7 @@ def graph(learning_rate: float, x0: float, a: float):
         grad_fn=model.trans_to_derivative(func),
         learning_rate=learning_rate,
         x=x0,
-        n_steps=100
+        n_steps=1000
     )
 
     px = [p[0] for p in points]
@@ -114,4 +114,4 @@ def graph(learning_rate: float, x0: float, a: float):
 
 
 if __name__ == "__main__":
-    graph(learning_rate=0.02, a=-30, x0=30.0)
+    fomula_test_cli()
