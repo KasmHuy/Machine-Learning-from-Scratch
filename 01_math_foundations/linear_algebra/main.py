@@ -1,1 +1,3 @@
-# TODO: training/demo script
+# TODO: PCA Reducing data dimension
+
+
