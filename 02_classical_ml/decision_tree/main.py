@@ -1,18 +1,28 @@
-# TODO: training/demo script
 import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+import model
+
 if __name__ == "__main__":
-    X_train = np.array([
-        [34, 85],  # Trời nóng, ẩm cao -> Không đi        0
-        [31, 80],  # Trời nóng, ẩm cao -> Không đi        0
-        [26, 70],  # Trời mát, ẩm vừa  -> Có đi           1
-        [22, 65],  # Trời se lạnh, ẩm thấp -> Có đi       1
-        [20, 90],  # Trời lạnh, ẩm quá cao -> Không đi    0
-        [24, 60],  # Trời mát, ẩm thấp -> Có đi           1
-        [15, 50],  # Trời rất lạnh, ẩm thấp -> Không đi   0
-        [28, 75],  # Trời ấm, ẩm vừa -> Có đi             1
-    ])
+    # 1. Chuẩn bị dữ liệu Iris
+    iris = load_iris()
+    X, y = iris.data, iris.target
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-    # y là nhãn (labels): 0 = Không đi chơi, 1 = Có đi chơi
-    y_train = np.array([0, 0, 1, 1, 0, 1, 0, 1])
+    # 2. Huấn luyện cây quyết định (Giới hạn độ sâu bằng 3 để mô hình vẽ ra vừa vặn khung hình)
+    my_tree = model.DecisionTree(max_depth=3, min_samples=2, criterion='gini', debug=True)
+    my_tree.fit(X_train, y_train)
+    
+    # 3. Tính độ chính xác của mô hình
+    preds = my_tree.predict(X_test)
+    accuracy = np.sum(preds == y_test) / len(y_test)
+    print(f"Độ chính xác trên tập Test: {accuracy * 100:.2f}%")
 
-    print(np.unique(y_train, return_counts =True)) ## trả về [các loại nhãn] và [số lượng thuộc loại của các nhãn khác nhau] tồn tại trong y
+    # 4. Kích hoạt vẽ cây quyết định bằng matplotlib
+    print("Đang sinh đồ thị cây quyết định...")
+    model.plot_tree(my_tree.root, feature_names=iris.feature_names, class_names=iris.target_names)
+    plt.tight_layout()
+    plt.show()  # Lệnh hiển thị cửa sổ đồ thị
+    
+    
