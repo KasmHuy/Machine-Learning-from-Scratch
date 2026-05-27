@@ -95,7 +95,7 @@ class DecisionTree:
                 if n_samples < self.min_samples: reason.append(f"Số mẫu quá ít ({n_samples}<{self.min_samples})")
                 if n_labels == 1: reason.append("Dữ liệu tinh khiết (chỉ còn 1 nhãn)")
                 
-                print(f"{indent}🍁 [NÚT LÁ TẦNG {depth}] Tạo nút lá. Lý do: {', '.join(reason)}")
+                print(f"{indent} [NÚT LÁ TẦNG {depth}] Tạo nút lá. Lý do: {', '.join(reason)}")
                 print(f"{indent}   -> Số lượng mẫu tại lá: {n_samples}, Phân bố: {dict(zip(unique_labels, label_counts))}")
                 print(f"{indent}   -> Dự đoán nhãn (Bầu chọn đa số): {leaf_value}\n")
                 
@@ -107,11 +107,11 @@ class DecisionTree:
         if best_feat is None or best_gain <= 0:
             leaf_value = np.bincount(y).argmax()
             if self.debug:
-                print(f"{indent}🍁 [NÚT LÁ TẦNG {depth}] Không tìm thấy điểm chia hợp lý giúp tăng Gain. Tạo nút lá. Dự đoán: {leaf_value}\n")
+                print(f"{indent}[NÚT LÁ TẦNG {depth}] Không tìm thấy điểm chia hợp lý giúp tăng Gain. Tạo nút lá. Dự đoán: {leaf_value}\n")
             return Node(value=leaf_value)
 
         if self.debug:
-            print(f"{indent}🌿 [NÚT QUYẾT ĐỊNH TẦNG {depth}] Chọn đặc trưng cột số {best_feat} với ngưỡng <= {best_thresh:.4f}")
+            print(f"{indent} [NÚT QUYẾT ĐỊNH TẦNG {depth}] Chọn đặc trưng cột số {best_feat} với ngưỡng <= {best_thresh:.4f}")
             print(f"{indent}   -> Gain đạt được: {best_gain:.4f} | Tổng số mẫu hiện tại: {n_samples}")
 
         # --- BƯỚC 2.3: CHẺ DỮ LIỆU VÀ ĐỆ QUY SANG 2 NHÁNH CON ---
@@ -168,7 +168,7 @@ def plot_tree(node, feature_names=None, class_names=None, x=0, y=1, dx=1, dy=0.1
         y_left = y - dy
         ax.plot([x, x_left], [y - 0.03, y_left + 0.03], c="gray", lw=1.5, ls="--")
         ax.text(x - dx/2, y - dy/2, "Yes", color="green", ha="right", va="bottom", fontsize=8)
-        plot_tree(node.left, feature_names, class_names, x_left, y_left, dx/1.8, dy, ax)
+        plot_tree(node.left, feature_names, class_names, x_left, y_left, dx/1.4, dy, ax)
 
     # Tính toán tọa độ và vẽ nhánh con bên phải (Màu xanh/False)
     if node.right:
@@ -176,6 +176,6 @@ def plot_tree(node, feature_names=None, class_names=None, x=0, y=1, dx=1, dy=0.1
         y_right = y - dy
         ax.plot([x, x_right], [y - 0.03, y_right + 0.03], c="gray", lw=1.5, ls="--")
         ax.text(x + dx/2, y - dy/2, "No", color="red", ha="left", va="bottom", fontsize=8)
-        plot_tree(node.right, feature_names, class_names, x_right, y_right, dx/1.8, dy, ax)
+        plot_tree(node.right, feature_names, class_names, x_right, y_right, dx/1.4, dy, ax)
 
 
